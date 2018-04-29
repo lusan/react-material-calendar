@@ -1,8 +1,9 @@
 import React from 'react'
+import Details from './details'
 
 const Calendar = () => (
   <div>
-    Calendar
+    <Details />
   </div>
 )
 
