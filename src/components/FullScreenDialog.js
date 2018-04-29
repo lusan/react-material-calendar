@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Dialog from 'material-ui/Dialog';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
@@ -12,8 +10,19 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Slide from 'material-ui/transitions/Slide';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/Menu/MenuItem';
 
-const styles = {
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+  },
   appBar: {
     position: 'relative',
   },
@@ -24,8 +33,32 @@ const styles = {
     position: 'fixed',
     bottom: '20px',
     right: '10px'
-  }
-};
+  },
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  withoutLabel: {
+    marginTop: theme.spacing.unit * 3,
+  },
+  textField: {
+    flexBasis: 200,
+  },
+})
+
+const ranges = [
+  {
+    value: '0-20',
+    label: '0 to 20',
+  },
+  {
+    value: '21-50',
+    label: '21 to 50',
+  },
+  {
+    value: '51-100',
+    label: '51 to 100',
+  },
+];
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -34,6 +67,9 @@ function Transition(props) {
 class FullScreenDialog extends React.Component {
   state = {
     open: false,
+    name: 'whatever',
+    weight: '',
+    weightRange: ''
   };
 
   handleClickOpen = () => {
@@ -70,15 +106,38 @@ class FullScreenDialog extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-            </ListItem>
-          </List>
+          <div>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="name-simple">Name</InputLabel>
+            <Input id="name-simple" />
+            <TextField
+              select
+              value={this.state.weightRange}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+              }}
+            >
+              {ranges.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select
+              value={this.state.weightRange}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+              }}
+            >
+              {ranges.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+          </div>
         </Dialog>
       </div>
     );
