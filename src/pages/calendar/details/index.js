@@ -14,6 +14,24 @@ const styles = theme => ({
   table: {
     minWidth: 700,
   },
+  tableCell: {
+    position: 'relative',
+    width: 100
+  },
+  event: {
+    "position": "absolute",
+    "top": "0",
+    "left": "0",
+    "zIndex": "5",
+    "background": "rgb(124, 179, 66)",
+    "height": "100%",
+    "color": "#fff",
+    "borderRadius": "4px",
+    "display": "inline-flex",
+    "alignItems": "center",
+    "padding": "2px",
+    "border": "1px solid #fff"
+  }
 });
 
 const getEventPositions = (noOfElements, arrIndex) => {
@@ -116,6 +134,10 @@ const calendarTimeData = [
   }
 ]
 
+const events = [
+  '1'
+]
+
 class Details extends Component {
   constructor(props) {
     super(props)
@@ -157,10 +179,24 @@ class Details extends Component {
                       {data.time}
                       {data.day_type}
                     </TableCell>
-                    <TableCell>
-                      <div>
-                        Event {index}
-                      </div>
+                    <TableCell className={classes.tableCell}>
+                      {events.map((data, index) => (
+                        <div 
+                          className={classes.event} 
+                          style={
+                            events.length > 1 ?
+                            {
+                            left: getEventPositions(events.length, index)+'%'
+                            } : 
+                            {
+                              left: 0,
+                              width: '100%'
+                            }
+                          }
+                        >
+                          Event {index}
+                        </div>
+                      ))}
                     </TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
