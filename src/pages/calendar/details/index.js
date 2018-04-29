@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-
+import FullScreenDialog from '../../../components/FullScreenDialog'
+ 
 const styles = theme => ({
   root: {
     width: '100%',
@@ -119,51 +120,61 @@ class Details extends Component {
   constructor(props) {
     super(props)
 
+    this.addEventToCalendar = this.addEventToCalendar.bind(this)
+  }
+  
+  addEventToCalendar(e) {
+    console.log('it works')
+
+    if (e.target !== e.currentTarget) {
+      console.log(e.target);
+    }
+    e.stopPropagation();
   }
 
   render() {
     const {classes} = this.props
     
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              {calendarData.map((data, index) => (
-                <TableCell key={index}>
-                  {data.date}
-                  {data.day}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {calendarTimeData.map((data, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {data.time}
-                    {data.day_type}
+      <div>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                {calendarData.map((data, index) => (
+                  <TableCell key={index}>
+                    {data.date}
+                    {data.day}
                   </TableCell>
-                  <TableCell>
-                    <div>
-                      Event 1
-                    </div>
-                    <div>
-                      Event 2
-                    </div>
-                  </TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </Paper>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody onClick={this.addEventToCalendar}>
+              {calendarTimeData.map((data, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      {data.time}
+                      {data.day_type}
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        Event {index}
+                      </div>
+                    </TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </Paper>
+        <FullScreenDialog />
+      </div>
     );
   }
 }
