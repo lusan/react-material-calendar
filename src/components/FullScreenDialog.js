@@ -11,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Slide from 'material-ui/transitions/Slide';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/Menu/MenuItem';
 

@@ -52,7 +52,10 @@ const calendarData = [
     id: 1,
     day: 'Sunday',
     date: 29,
-    month: 'April'
+    month: 'April',
+    events: [
+      '1', '2', '3'
+    ]
   },
   {
     id: 2,
@@ -96,47 +99,71 @@ const calendarTimeData = [
   {
     id: 1,
     time: 1,
-    day_type: 'am'
+    day_type: 'am',
+    events: [
+      
+    ]
   },
   {
     id: 2,
     time: 2,
-    day_type: 'am'
+    day_type: 'am',
+    events: [
+      ['event 7', 'event  8', 'event 9'],
+      ['event 10', 'event  11', 'event 12'],
+      ['event 10', 'event  11', 'event 12'],
+      ['event 10', 'event  11', 'event 12'],
+      ['event 10', 'event  11', 'event 12'],
+      ['event 7', 'event  8', 'event 9'],
+      ['event 10', 'event  11', 'event 12']
+    ]
   },
   {
     id: 3,
     time: 3,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   },
   {
     id: 4,
     time: 5,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   },{
     id: 6,
     time: 6,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   },
   {
     id: 7,
     time: 7,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   },
   {
     id: 8,
     time: 8,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   },
   {
     id: 9,
     time: 9,
-    day_type: 'am'
+    day_type: 'am',
+    events: []
   }
 ]
 
-const events = [
-  '1'
-]
+const getRemainingColumns = (arrLength, classes) => {
+  var columns = []
+  
+  for(let i = 0; i < 7 - arrLength; ++i) {
+    columns.push(<TableCell className={classes.tableCell} key={i}></TableCell>)
+  }
+  
+  return columns
+}
 
 class Details extends Component {
   constructor(props) {
@@ -173,37 +200,35 @@ class Details extends Component {
               </TableRow>
             </TableHead>
             <TableBody onClick={this.addEventToCalendar}>
-              {calendarTimeData.map((data, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
+              {calendarTimeData.map((data, calendarIndex) => (
+                  <TableRow key={calendarIndex}>
+                    <TableCell className={classes.tableCell}>
                       {data.time}
                       {data.day_type}
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {events.map((data, index) => (
-                        <div 
-                          className={classes.event} 
-                          style={
-                            events.length > 1 ?
-                            {
-                            left: getEventPositions(events.length, index)+'%'
-                            } : 
-                            {
-                              left: 0,
-                              width: '100%'
+                    {data.events.map((event, index) => (
+                      <TableCell className={classes.tableCell}>
+                        {event.map((eve, index) => (
+                          <div
+                            key={index} 
+                            className={classes.event} 
+                            style={
+                              event.length > 1 ?
+                              {
+                              left: getEventPositions(event.length, index)+'%'
+                              } : 
+                              {
+                                left: 0,
+                                width: '100%'
+                              }
                             }
-                          }
-                        >
-                          Event {index}
-                        </div>
-                      ))}
-                    </TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
+                          >
+                            {eve}
+                          </div>
+                        ))}
+                      </TableCell>
+                    ))}
+                    {getRemainingColumns(data.events.length, classes)}
                   </TableRow>
                 ))}
             </TableBody>
